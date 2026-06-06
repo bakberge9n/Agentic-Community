@@ -1,0 +1,150 @@
+@import "tailwindcss";
+
+/* ─── Custom design tokens ─── */
+@theme {
+  /* Monochrome palette */
+  --color-zinc-50: #fafafa;
+  --color-zinc-100: #f4f4f5;
+  --color-zinc-200: #e4e4e7;
+  --color-zinc-300: #d4d4d8;
+  --color-zinc-400: #a1a1aa;
+  --color-zinc-500: #71717a;
+  --color-zinc-600: #52525b;
+  --color-zinc-700: #3f3f46;
+  --color-zinc-800: #27272a;
+  --color-zinc-900: #18181b;
+  --color-zinc-950: #09090b;
+
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+  --color-slate-950: #020617;
+
+  /* Muted sage accent */
+  --color-sage-50: #f6f7f4;
+  --color-sage-100: #e3e5de;
+  --color-sage-200: #c8cdbf;
+  --color-sage-300: #a9b09a;
+  --color-sage-400: #8e967d;
+  --color-sage-500: #747d64;
+  --color-sage-600: #5c634e;
+  --color-sage-700: #484e3e;
+  --color-sage-800: #3b4034;
+  --color-sage-900: #33372d;
+  --color-sage-950: #1a1d16;
+
+  /* Deep slate accent */
+  --color-deep-slate-50: #f0f2f5;
+  --color-deep-slate-100: #d9dee6;
+  --color-deep-slate-200: #b3bcc9;
+  --color-deep-slate-300: #8594a8;
+  --color-deep-slate-400: #5f7189;
+  --color-deep-slate-500: #44546b;
+  --color-deep-slate-600: #364356;
+  --color-deep-slate-700: #2c3647;
+  --color-deep-slate-800: #262e3c;
+  --color-deep-slate-900: #212734;
+  --color-deep-slate-950: #151920;
+
+  /* Semantic colors */
+  --color-status-active: #22c55e;
+  --color-status-idle: #94a3b8;
+  --color-status-error: #ef4444;
+  --color-status-warning: #f59e0b;
+
+  /* Typography */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Playfair Display', 'Georgia', serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* ─── Base reset ─── */
+*, *::before, *::after {
+  border-color: var(--color-zinc-200);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-zinc-50);
+  color: var(--color-zinc-900);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Remove default shadows, keep borders subtle ─── */
+.shadow-soft {
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.03);
+}
+
+/* ─── Scrollbar styling ─── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-zinc-300);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-zinc-400);
+}
+
+/* ─── Utility classes ─── */
+.card {
+  background-color: white;
+  border: 1px solid var(--color-zinc-200);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+}
+
+.card-header {
+  margin-bottom: 1rem;
+}
+
+.card-title {
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-zinc-900);
+  letter-spacing: -0.01em;
+}
+
+.card-description {
+  font-size: 0.875rem;
+  color: var(--color-zinc-500);
+  margin-top: 0.25rem;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.badge-active {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.badge-idle {
+  background-color: var(--color-zinc-100);
+  color: var(--color-zinc-600);
+}
+
+.badge-error {
+  background-color: #fef2f2;
+  color: #991b1b;
+}
