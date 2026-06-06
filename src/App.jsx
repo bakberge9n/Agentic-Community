@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
 import AppLayout from "./components/AppLayout";
 import FleetOverview from "./pages/FleetOverview";
 import OrchestrationGraph from "./pages/OrchestrationGraph";
