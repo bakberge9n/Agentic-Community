@@ -3,8 +3,17 @@ uvicorn[standard]>=0.30.0
 pydantic>=2.9.0
 pydantic-settings>=2.5.0
 python-dotenv>=1.0.0
-# Optional: uncomment when Qdrant is available
-# qdrant-client>=1.11.0
-# langgraph>=0.2.0
-# langchain-core>=0.2.27,<0.3
-# mcp>=1.0.0
+websockets>=12.0
+
+# Vector Database
+qdrant-client>=1.11.0
+
+# LLM Orchestration
+langgraph>=0.2.0
+langchain-core>=0.2.27,<0.3
+
+# LLM Providers
+openai>=1.0.0
+google-generativeai>=0.8.0
+langchain-openai>=0.2.0
+langchain-google-genai>=2.0.0

@@ -14,6 +14,7 @@ from app.api.routes.orchestration import router as orchestration_router
 from app.api.routes.memory import router as memory_router
 from app.api.routes.reflexion import router as reflexion_router
 from app.api.routes.hitl import router as hitl_router
+from app.api.routes.tasks import router as tasks_router
 from app.websocket.manager import manager, periodic_agent_updates
 
 logging.basicConfig(
@@ -26,9 +27,13 @@ logger = logging.getLogger(__name__)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Start background tasks on startup, clean up on shutdown."""
-    # Start background periodic agent update task
+    # Initialize Qdrant collections on startup
+    from app.services.memory_service import get_client
+    get_client()
+
+    # Start background periodic agent update task (every 2s)
     task = asyncio.create_task(periodic_agent_updates())
-    logger.info("FastAPI backend started — periodic WebSocket updates active")
+    logger.info("FastAPI backend started — periodic WebSocket updates active (2s interval)")
     yield
     task.cancel()
     logger.info("FastAPI backend shutting down")
@@ -37,7 +42,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="Agentic Community Dashboard API",
     description="Backend API for the multi-agent AI system control plane dashboard",
-    version="0.1.0",
+    version="0.2.0",
     lifespan=lifespan,
 )
 
@@ -56,6 +61,7 @@ app.include_router(orchestration_router)
 app.include_router(memory_router)
 app.include_router(reflexion_router)
 app.include_router(hitl_router)
+app.include_router(tasks_router)
 
 
 # ─── Health Check ───────────────────────────────────────────────────────────
@@ -66,8 +72,10 @@ async def health_check():
     return JSONResponse(
         content={
             "status": "ok",
-            "version": "0.1.0",
+            "version": "0.2.0",
             "service": "agentic-community-backend",
+            "qdrant": "in-memory",
+            "agents": ["manager", "researcher", "analyst", "writer", "reviewer"],
         }
     )
 
@@ -81,11 +89,17 @@ async def websocket_endpoint(websocket: WebSocket):
     try:
         while True:
             # Keep connection alive; receive any client messages
-            await websocket.receive_text()
+            data = await websocket.receive_text()
+            # Handle client-side pings or commands
+            if data == "ping":
+                await websocket.send_text(json.dumps({"type": "pong"}))
     except WebSocketDisconnect:
         await manager.disconnect(websocket)
     except Exception:
         await manager.disconnect(websocket)
+
+
+import json
 
 
 # ─── Entry Point ────────────────────────────────────────────────────────────
